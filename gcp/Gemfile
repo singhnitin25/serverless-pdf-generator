@@ -1,0 +1,15 @@
+source "https://rubygems.org"
+
+ruby '3.3.6'
+
+# Include the Ruby Functions Framework as a dependency.
+gem 'functions_framework', '~> 1.4', '>= 1.4.2'
+gem 'wicked_pdf', '~> 2.8', '>= 2.8.2'
+gem 'wkhtmltopdf-binary', '~> 0.12.6.8'
+
+# Other function dependencies, for example:
+# gem "package", "~> version"
+
+group :development, :test do
+  gem 'rspec', '~> 3.13'
+end
