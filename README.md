@@ -24,11 +24,44 @@ You can find product overview here [Cloud Run Functions](https://cloud.google.co
 
 #### GCP function Authentication
 
-TODO
+You need to generate IdToken to access GCP function. Either use ruby sdk or gcloud cli to generate token.
 
 #### GCP function deployment
 
-TODO
+[Check this for more details](https://googlecloudplatform.github.io/functions-framework-ruby/v1.4.2/file.deploying-functions.html)
+
+**Deploy GCP function with GCP provided runtimes & Images**
+You can deploy GCP function from your local system using below command:
+<pre>
+gcloud functions deploy $YOUR_FUNCTION_NAME \
+    --project=$YOUR_PROJECT_ID \
+    --runtime=ruby27 \
+    --trigger-http \
+    --entry-point=$YOUR_FUNCTION_TARGET
+</pre>
+for example:
+<pre>
+gcloud functions deploy pdf_creation_service \
+    --project=<TEST GCP PROJECT ID> \
+    --runtime=ruby33 \
+    --trigger-http \
+    --entry-point=pdf_creation_service
+
+</pre>
+
+**Deploy GCP function with custom runtimes & managed by user**
+
+1. Build the docker image using dockerfile `gcp/Dockerfile` and push it to google artifact registry. Use **Linux_x86_64** architecture only because cloud run supports only this architecture.You can use command `docker build --platform linux/amd64 -t pdf-generation-service:latest .` to build the image.
+2. Now, you need to deploy it to Cloud Run Service:
+<pre>
+gcloud run deploy <CLOUD_RUN_SERVICE_NAME> \\
+  --image=<DOCKER_IMAGEE_URL> \\
+  --platform=managed \
+  --region=<REGION> \
+  --timeout=<TIMEOUT_IN_SECONDS> \
+  --set-env-vars=GCP_PROJECT_ID=<PROJECT_ID> \
+  --service-account=<SERVICE_ACCOUNT_EMAIL>
+</pre>
 
 ## AWS Lambda Function:
 

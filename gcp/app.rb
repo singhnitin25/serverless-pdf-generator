@@ -7,7 +7,9 @@ FunctionsFramework.http "pdf_creation_service" do |request|
   logger = request.logger
 
   WickedPdf.configure do |config|
-    config.exe_path = "#{Gem.bin_path('wkhtmltopdf-binary', 'wkhtmltopdf')}"
+    # TODO - Use this if you are using wkhtmltopdf-binary gem to install wkhtmltopdf library
+    # config.exe_path = "#{Gem.bin_path('wkhtmltopdf-binary', 'wkhtmltopdf')}"
+    config.exe_path = "/usr/bin/wkhtmltopdf"
     config.enable_local_file_access = true
   end
   request_payload = parse_request_body(request.body.read.to_s, logger)
